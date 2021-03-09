@@ -242,10 +242,13 @@ class AndroidBridge(AdMobBridge):
         self._test_devices.append(testID)
 
     @run_on_ui_thread
-    def new_banner(self, unitID, top_pos=True):
+    def new_banner(self, unitID, smart=True, top_pos=True):
         self._adview = AdView(activity.mActivity)
         self._adview.setAdUnitId(unitID)
-        self._adview.setAdSize(AdSize.SMART_BANNER)
+        if not smart:
+            self._adview.setAdSize(AdSize.BANNER)
+        else:
+            self._adview.setAdSize(AdSize.SMART_BANNER)
         self._adview.setVisibility(View.GONE)
         adLayoutParams = LayoutParams(
             LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
